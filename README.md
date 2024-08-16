@@ -28,6 +28,8 @@ Còn trong văn bản trên sử dụng cú pháp
 
 Mathjax cho phép [ cấu hình cú pháp ](https://docs.mathjax.org/en/latest/web/configuration.html) tuy nhiên plugin mathdown-it-mathjax đã fix cứng cú pháp ở 2 hàm `math-inline` và `math-block`. Cần chỉnh sửa 2 hàm đấy để nhận biết thêm nhiều cú pháp hơn.
 
+Họ đang sử dụng hàm render của mathJax nhưng cách nhận biết luật đang được xử lý bởi Markdown-it.Thế nên cấu hình luật cho mathJax không có mấy tác dụng kể cả khi 2 hàm trên không được fix cứng.
+
 ## Cần tìm hiểu
 
 [markdown-it design principle](https://github.com/markdown-it/markdown-it/blob/master/docs/architecture.md)
