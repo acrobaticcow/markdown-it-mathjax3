@@ -1,74 +1,54 @@
-# markdown-it-mathjax3
+## Mục tiêu
 
-Add Math to your Markdown
+Nhận diện các công thức toán học trong đoạn văn bản ở `src/exampleMd.md` và render nó dùng mathjax
 
-This is a fork of [markdown-it-katex](http://waylonflinn.github.io/markdown-it-katex/) to support MathJax v3 and SVG rendering.
+## Vấn đề
 
-## Quick Start
+Cú pháp để sử dụng mathjax trong mathdown-it-mathjax3 là
 
-1. Install markdown-it and this plugin
+- inlineMath: `$1+1$`
+- blockMath: `$$ 1 + 2 $$`
 
-   ```
-   npm install markdown-it markdown-it-mathjax3
-   ```
+Còn trong văn bản trên sử dụng cú pháp
 
-2. Use it in your  code
+- inlineMath: \\(1+1\\)
+- blockMath:
+  \\[
+  1+1=2
+  \\]
 
-   ```javascript
-   var md = require('markdown-it')(),
-       mathjax3 = require('markdown-it-mathjax3');
-   
-   md.use(mathjax3);
-   
-   // double backslash is required for javascript strings, but not html input
-   var result = md.render('# Math Rulez! \n  $\\sqrt{3x-1}+(1+x)^2$');
-   ```
+## Hướng giải quyết
 
-## Customization
+Mathjax cho phép [ cấu hình cú pháp ](https://docs.mathjax.org/en/latest/web/configuration.html) tuy nhiên plugin mathdown-it-mathjax đã fix cứng cú pháp ở 2 hàm `math-inline` và `math-block`
 
-This plugin accepts the MathJax configuration.
-Instead of `<script>window.MathJax = { tex: ..., svg: ...}</script>`,
-pass it like `md.use(mathjax3, { tex: ..., svg: ... })`.
+## Cần tìm hiểu
 
-## FAQ
+[markdown-it design principle](https://github.com/markdown-it/markdown-it/blob/master/docs/architecture.md)
 
-- How to attach equation tags?
-  -- Pass the options like `md.use(mathjax3, { tex: {tags: 'ams'} })`
+[markdown-it ruler](https://markdown-it.github.io/markdown-it/#Ruler)
 
-## Examples
+[Adding or modifying rules](https://github.com/markdown-it/markdown-it/blob/master/docs/examples/renderer_rules.md) (_optional_)
 
-### Inline
+## Sự khác nhau giữa ruler và rules
 
-Surround your LaTeX with a single `$` on each side for inline rendering.
-```
-$\sqrt{3x-1}+(1+x)^2$
+Ruler là để quản lý hoặc nhận biết một luật gì đó trong mdit.
+
+Còn Rules là đối với quy luật đấy thì người dùng muốn thực hiện chức năng gì
+
+VD:
+
+```ts
+md.inline.ruler.after("escape", "math_inline", math_inline);
 ```
 
-### Block
+Ở đây ta thêm một luật mới đằng sau luật `escape` tên là `math_inline`  
+Hàm `math_inline` chính là luật. Hàm này trả về kiểu boolean
 
-Use two (`$$`) for block rendering. This mode uses bigger symbols and centers
-the result.
-
-```
-$$\begin{array}{c}
-
-\nabla \times \vec{\mathbf{B}} -\, \frac1c\, \frac{\partial\vec{\mathbf{E}}}{\partial t} &
-= \frac{4\pi}{c}\vec{\mathbf{j}}    \nabla \cdot \vec{\mathbf{E}} & = 4 \pi \rho \\
-
-\nabla \times \vec{\mathbf{E}}\, +\, \frac1c\, \frac{\partial\vec{\mathbf{B}}}{\partial t} & = \vec{\mathbf{0}} \\
-
-\nabla \cdot \vec{\mathbf{B}} & = 0
-
-\end{array}$$
+```ts
+md.renderer.rules.math_inline = function (tokens: Token[], idx: number) {
+  convertOptions.display = false;
+  return renderMath(tokens[idx].content, documentOptions, convertOptions);
+};
 ```
 
-## Syntax
-
-Math parsing in markdown is designed to agree with the conventions set by pandoc:
-
-    Anything between two $ characters will be treated as TeX math. The opening $ must
-    have a non-space character immediately to its right, while the closing $ must
-    have a non-space character immediately to its left, and must not be followed
-    immediately by a digit. Thus, $20,000 and $30,000 won’t parse as math. If for some
-    reason you need to enclose text in literal $ characters, backslash-escape them and
-    they won’t be treated as math delimiters.
+Đối với luật `math_inline` chúng ta muốn thực hiện chức năng trên
