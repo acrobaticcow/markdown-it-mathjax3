@@ -1,6 +1,8 @@
 ## Cài đặt 
-Prj yêu cầu node >= 18 
+Yêu cầu node >= 18 
+
 Cài đặt pkg: `yarn`
+
 Khởi động: `yarn dev`
 
 ## Mục tiêu
