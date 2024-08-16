@@ -1,3 +1,8 @@
+## Cài đặt 
+Prj yêu cầu node >= 18 
+Cài đặt pkg: `yarn`
+Khởi động: `yarn dev`
+
 ## Mục tiêu
 
 Nhận diện các công thức toán học trong đoạn văn bản ở `src/exampleMd.md` và render nó dùng mathjax
