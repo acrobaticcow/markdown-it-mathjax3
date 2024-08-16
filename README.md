@@ -26,7 +26,7 @@ Còn trong văn bản trên sử dụng cú pháp
 
 ## Hướng giải quyết
 
-Mathjax cho phép [ cấu hình cú pháp ](https://docs.mathjax.org/en/latest/web/configuration.html) tuy nhiên plugin mathdown-it-mathjax đã fix cứng cú pháp ở 2 hàm `math-inline` và `math-block`
+Mathjax cho phép [ cấu hình cú pháp ](https://docs.mathjax.org/en/latest/web/configuration.html) tuy nhiên plugin mathdown-it-mathjax đã fix cứng cú pháp ở 2 hàm `math-inline` và `math-block`. Cần chỉnh sửa 2 hàm đấy để nhận biết thêm nhiều cú pháp hơn.
 
 ## Cần tìm hiểu
 
